@@ -53,11 +53,7 @@ public class HardCoreCocaineVersionOfCollectionTasks1 {
                     for (int i = 0; i < booleans.length; i++) {
                         Character[] charactersSubArray = new Character[booleans[i].length];
                         for (int j = 0; j < booleans[i].length; j++) {
-                            if (booleans[i][j]) {
-                                charactersSubArray[j] = 'T';
-                            } else {
-                                charactersSubArray[j] = 'F';
-                            }
+                            charactersSubArray[j] = (booleans[i][j] ? 'T' : 'F');
                         }
                         characters[i] = charactersSubArray;
                     }
@@ -87,7 +83,7 @@ public class HardCoreCocaineVersionOfCollectionTasks1 {
             Character[][] characters = charactersList.get(i);
             String[][] strings = stringsList.get(i);
             for (int j = 0; j < characters.length; j++) {
-                for (int k = 0; k < characters[i].length; k++) {;
+                for (int k = 0; k < characters[i].length; k++) {
                     result.merge(characters[j][k], strings[j][k], (oldValue, newValue) -> oldValue + " " + newValue);
                 }
             }
@@ -118,11 +114,7 @@ public class HardCoreCocaineVersionOfCollectionTasks1 {
                     for (int i = 0; i < booleans.length; i++) {
                         Character[] charactersSubArray = new Character[booleans[i].length];
                         for (int j = 0; j < booleans[i].length; j++) {
-                            if (booleans[i][j]) {
-                                charactersSubArray[j] = 'T';
-                            } else {
-                                charactersSubArray[j] = 'F';
-                            }
+                            charactersSubArray[j] = (booleans[i][j] ? 'T' : 'F');
                         }
                         characters[i] = charactersSubArray;
                     }
