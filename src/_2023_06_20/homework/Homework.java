@@ -213,8 +213,6 @@ public class Homework {
 
     //Найти среднее значение элементов в каждом столбце и вывести его.[][]
     public static void printAverageValueOfEachColumn(int[][] inputArray) {
-        Map<Integer, Integer> result = new HashMap<>();
-
         for (int i = 0; i < inputArray[0].length; i++) {
             int sum = 0;
             for (int[] ints : inputArray) {
@@ -223,6 +221,7 @@ public class Homework {
             System.out.println("Column " + i + ": " + sum / inputArray.length);
         }
     }
+
     //Посчитать количество элементов, кратных заданному числу, во всем массиве.[][]
     public static void printCountOfElementsMultipleOfNumber(int[][] inputArray, int number) {
         int count = 0;
