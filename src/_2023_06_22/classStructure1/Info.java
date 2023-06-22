@@ -52,15 +52,15 @@ public class Info {
 
     public Map<String, Double> minSalary(Set<Employee> employees, Department department) {
         Map<String, Double> result = new HashMap<>();
-        String nameOfEmployeeWithMaxSalary = "";
+        String nameOfEmployeeWithMinSalary = "";
         double minSalary = Double.MAX_VALUE;
         for (Employee employee : employees) {
             if (department.equals(employee.getDepartment()) && employee.getSalary() < minSalary) {
-                nameOfEmployeeWithMaxSalary = employee.getName();
+                nameOfEmployeeWithMinSalary = employee.getName();
                 minSalary = employee.getSalary();
             }
         }
-        result.put(nameOfEmployeeWithMaxSalary, minSalary);
+        result.put(nameOfEmployeeWithMinSalary, minSalary);
         return result;
     }
 
@@ -73,6 +73,7 @@ public class Info {
             for (int i = 0; i < positions.length; i++) {
                 if (positions[i].equals(employee.getPosition())) {
                     indexOfPosition = i;
+                    break;
                 }
             }
 
