@@ -47,7 +47,7 @@ public class HardCoreCocaineVersionOfCollectionTasks1 {
     public static Map<Character, String> transformMaps(Map<Boolean[][], Character[][]> map1, Map<Integer[][], String[][]> map2) {
         List<Character[][]> charactersList = map1.entrySet()
                 .stream()
-                .peek(entry -> {
+                .map(entry -> {
                     Boolean[][] booleans = entry.getKey();
                     Character[][] characters = new Character[booleans.length][];
                     for (int i = 0; i < booleans.length; i++) {
@@ -58,12 +58,13 @@ public class HardCoreCocaineVersionOfCollectionTasks1 {
                         characters[i] = charactersSubArray;
                     }
                     entry.setValue(characters);
-                }).map(Map.Entry::getValue)
+                    return characters;
+                })
                 .collect(Collectors.toList());
 
         List<String[][]> stringsList = map2.entrySet()
                 .stream()
-                .peek(entry -> {
+                .map(entry -> {
                     Integer[][] integers = entry.getKey();
                     String[][] strings = new String[integers.length][];
                     for (int i = 0; i < integers.length; i++) {
@@ -74,7 +75,8 @@ public class HardCoreCocaineVersionOfCollectionTasks1 {
                         strings[i] = stringsSubArray;
                     }
                     entry.setValue(strings);
-                }).map(Map.Entry::getValue)
+                    return strings;
+                })
                 .collect(Collectors.toList());
 
         Map<Character, String> result = new HashMap<>();
@@ -83,7 +85,7 @@ public class HardCoreCocaineVersionOfCollectionTasks1 {
             Character[][] characters = charactersList.get(i);
             String[][] strings = stringsList.get(i);
             for (int j = 0; j < characters.length; j++) {
-                for (int k = 0; k < characters[i].length; k++) {
+                for (int k = 0; k < characters[j].length; k++) {
                     result.merge(characters[j][k], strings[j][k], (oldValue, newValue) -> oldValue + " " + newValue);
                 }
             }
@@ -108,7 +110,7 @@ public class HardCoreCocaineVersionOfCollectionTasks1 {
     public static Map<String, Boolean> transformMaps2(Map<Boolean[][], Character[][]> map1, Map<Integer[][], String[][]> map2) {
         List<Boolean[][]> booleansList = map1.entrySet()
                 .stream()
-                .peek(entry -> {
+                .map(entry -> {
                     Boolean[][] booleans = entry.getKey();
                     Character[][] characters = new Character[booleans.length][];
                     for (int i = 0; i < booleans.length; i++) {
@@ -119,12 +121,13 @@ public class HardCoreCocaineVersionOfCollectionTasks1 {
                         characters[i] = charactersSubArray;
                     }
                     entry.setValue(characters);
-                }).map(Map.Entry::getKey)
+                    return booleans;
+                })
                 .collect(Collectors.toList());
 
         List<String[][]> stringsList = map2.entrySet()
                 .stream()
-                .peek(entry -> {
+                .map(entry -> {
                     Integer[][] integers = entry.getKey();
                     String[][] strings = new String[integers.length][];
                     for (int i = 0; i < integers.length; i++) {
@@ -135,7 +138,8 @@ public class HardCoreCocaineVersionOfCollectionTasks1 {
                         strings[i] = stringsSubArray;
                     }
                     entry.setValue(strings);
-                }).map(Map.Entry::getValue)
+                    return strings;
+                })
                 .collect(Collectors.toList());
 
         Map<String, Boolean> result = new HashMap<>();
@@ -144,7 +148,7 @@ public class HardCoreCocaineVersionOfCollectionTasks1 {
             Boolean[][] booleans = booleansList.get(i);
             String[][] strings = stringsList.get(i);
             for (int j = 0; j < booleans.length; j++) {
-                for (int k = 0; k < booleans[i].length; k++) {
+                for (int k = 0; k < booleans[j].length; k++) {
                     result.put(strings[j][k], booleans[j][k]);
                 }
             }
