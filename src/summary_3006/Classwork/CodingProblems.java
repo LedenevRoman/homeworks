@@ -1,9 +1,10 @@
 package summary_3006.Classwork;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class CodingProblems {
+    public static void main(String[] args) {
+    }
 
     // 0. Спроектировать очередь с одним произвольным элементом.
     // метод add(elem) добавляет элемент
@@ -60,6 +61,4 @@ public class CodingProblems {
 
     // 3. Даны два отсортированных массива размера n и m. Нужно создать новый массив n+m из элементов первых двух
     // так же в отсортированном порядке.
-    public static void main(String[] args) {
-    }
 }

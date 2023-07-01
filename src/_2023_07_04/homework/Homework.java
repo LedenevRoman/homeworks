@@ -8,6 +8,7 @@ public class Homework {
         System.out.println(getWordsGroupedByLength(List.of("Aloha", "A", "AB", "ABAB", "ahola", "asdfg")));
         System.out.println(getUniqueSortedChars(List.of("Aloha", "A", "AB", "ABAB", "ahola", "asdfg")));
         System.out.println(getSecondMax(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9)));
+        System.out.println(getFilteredGroupedWords(List.of("as123fadd","Aloha", "A", "AB", "ABAB", "ahola", "asdfg")));
 
     }
 
@@ -93,11 +94,63 @@ public class Homework {
     }
 
     //Дан список слов. Необходимо отфильтровать слова, состоящие только из букв, разделить их на гласные и согласные, и вывести результат.
+    public static List<Map<String, String>> getFilteredGroupedWords(List<String> words) {
+        String consonants = "bcdfghjklmnpqrstvwxyz";
+        return words.stream()
+                .filter(s -> s.matches("[A-Za-z]+"))
+                .map(word -> {
+                    Map<String, String> wordLetters = new HashMap<>();
+                    word.chars()
+                            .mapToObj(c -> (char) c)
+                            .forEach(character -> {
+                                String charToString = String.valueOf(Character.toLowerCase(character));
+                                if (consonants.contains(charToString)) {
+                                    wordLetters.merge("consonants", charToString, (oldValue, newValue) -> oldValue + ", " + newValue);
+                                } else {
+                                    wordLetters.merge("vowels", charToString, (oldValue, newValue) -> oldValue + ", " + newValue);
+                                }
+                            });
+                    return wordLetters;
+                }).collect(Collectors.toList());
+
+    }
 
     //Дан список строк. Необходимо удалить пустые строки, объединить оставшиеся строки в одну строку, разделенную запятой.
+    public static String getJoinedString(List<String> strings) {
+        return strings.stream()
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.joining(", "));
+    }
+
     //Дан список слов. Необходимо объединить все символы из всех слов в одну строку.
+    public static String getJoinedChars(List<String> strings) {
+        return strings.stream().collect(Collectors.joining());
+    }
+
     //Дан список слов. Необходимо проверить, содержат ли они одинаковые символы (являются ли анаграммами) и вывести результат.
+    public static boolean isAnagram(List<String> strings) {
+        if (strings.isEmpty()) {
+            return false;
+        }
+        char[] chars = strings.get(0).toCharArray();
+        Arrays.sort(chars);
+        return strings.stream()
+                .map(String::toCharArray)
+                .allMatch(charsArr -> {
+                    Arrays.sort(charsArr);
+                    return Arrays.equals(chars, charsArr);
+                });
+    }
+
     //Даны два списка чисел. Необходимо найти разность множеств (элементы, присутствующие только в одном из списков) и вывести результат.
+    public static List<Integer> getDifferenceOfLists(List<Integer> list1, List<Integer> list2) {
+        List<Integer> result = new ArrayList<>(list1);
+        result.addAll(list2);
+        List<Integer> intersection = new ArrayList<>(list1);
+        intersection.retainAll(list2);
+        result.removeAll(intersection);
+        return result;
+    }
     //Дан список слов. Необходимо подсчитать количество слов для каждой длины и вывести результат.
     //Дан список строк. Необходимо отфильтровать строки, которые начинаются с префикса "pre" и заканчиваются суффиксом "post".
     //Дан список слов. Необходимо подсчитать количество символов в каждом слове и вывести результат.

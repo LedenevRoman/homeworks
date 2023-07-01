@@ -31,6 +31,6 @@ public class Anagram {
         return str.chars()
                 .mapToObj(i->(char)i)
                 .map(Character::toLowerCase)
-                .collect(Collectors.toMap(elem -> elem,elem -> 1,Integer::sum));
+                .collect(Collectors.toMap(key -> key, value -> 1, (a, b) -> Integer.sum(a, b)));
     }
 }
