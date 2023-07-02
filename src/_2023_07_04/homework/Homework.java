@@ -9,7 +9,10 @@ public class Homework {
         System.out.println(getUniqueSortedChars(List.of("Aloha", "A", "AB", "ABAB", "ahola", "asdfg")));
         System.out.println(getSecondMax(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9)));
         System.out.println(getFilteredGroupedWords(List.of("as123fadd","Aloha", "A", "AB", "ABAB", "ahola", "asdfg")));
-
+        System.out.println(getLongestWordWithEvenLength(List.of("as123fadd","Aloha", "A", "AB", "ABAB", "ahola", "asdfg", "121212121212")));
+        System.out.println(isPalindromes(List.of("Aloha", "Ahola", "Laoha", "Ahalo", "ahoal", "olaha")));
+        System.out.println(getMaxEvenNumber(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9)));
+        System.out.println(transformToStringWithBrackets(List.of("Aloha", "Ahola", "Laoha", "Ahalo", "ahoal", "olaha")));
     }
 
     //Дан список строк. Необходимо отфильтровать строки, длина которых больше 3 символов, преобразовать их в верхний регистр, удалить повторяющиеся и вывести результат в отсортированном порядке.
@@ -151,15 +154,85 @@ public class Homework {
         result.removeAll(intersection);
         return result;
     }
+
     //Дан список слов. Необходимо подсчитать количество слов для каждой длины и вывести результат.
+    public static Map<Integer, Long> getLengthCount(List<String> words) {
+        return words.stream()
+                .collect(Collectors.groupingBy(String::length, Collectors.counting()));
+    }
+
     //Дан список строк. Необходимо отфильтровать строки, которые начинаются с префикса "pre" и заканчиваются суффиксом "post".
+    public static List<String> getWordsWithPreAndPost(List<String> strings) {
+        return strings.stream()
+                .filter(s -> s.startsWith("pre") && s.endsWith("post"))
+                .collect(Collectors.toList());
+    }
+
     //Дан список слов. Необходимо подсчитать количество символов в каждом слове и вывести результат.
+    public static Map<String, Integer> getCountOfLettersOfWords(List<String> strings) {
+        return strings.stream().collect(Collectors.toMap(s -> s, String::length));
+    }
+
     //Дан список чисел. Необходимо найти среднее значение всех уникальных чисел.
+    public static double getAvgOfUniqueNumbers(List<Integer> integers) {
+        return integers.stream()
+                .collect(Collectors.toMap(integer -> integer, value -> 1, Integer::sum))
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() == 1)
+                .map(Map.Entry::getKey)
+                .mapToInt(i -> i)
+                .average()
+                .orElse(0.0);
+    }
+
     //Дан список слов. Необходимо найти самое длинное слово с четной длиной.
+    public static String getLongestWordWithEvenLength(List<String> strings) {
+        return strings.stream()
+                .filter(s -> s.length() % 2 == 0)
+                .sorted(Comparator.comparingInt(String::length).reversed())
+                .limit(1)
+                .findAny()
+                .orElse(null);
+    }
+
     //Дан список строк. Необходимо удалить все пробелы в каждой строке, отсортировать их в лексикографическом порядке и вывести результат.
+    public static List<String> getSortedStringsWithoutSpaces(List<String> strings) {
+        return strings.stream()
+                .map(s -> s.replaceAll(" ", ""))
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
     //Дан список слов. Необходимо проверить, являются ли они палиндромами, и вывести результат.
+    public static boolean isPalindromes(List<String> words) {
+        if (words.size() % 2 != 0) {
+            return false;
+        }
+        Map<String, String> stringMap = new HashMap<>();
+        words.forEach(word -> {
+            String wordLoverCase = word.toLowerCase();
+            stringMap.put(wordLoverCase, new StringBuilder(wordLoverCase).reverse().toString());
+        });
+
+        return stringMap.keySet().equals(new HashSet<>(stringMap.values()));
+    }
+
     //Дан список чисел. Необходимо найти максимальное четное число.
+    public static Integer getMaxEvenNumber(List<Integer> integers) {
+        return integers.stream()
+                .filter(integer -> integer % 2 == 0)
+                .max(Comparator.naturalOrder())
+                .orElse(null);
+    }
+
     //Дан список строк. Необходимо объединить все строки в одну строку, добавив префикс ">>" и суффикс "<<" к каждой строке.
+    public static String transformToStringWithBrackets(List<String> strings) {
+        return strings.stream()
+                .map(s -> new StringBuilder(">>" + s + "<<"))
+                .collect(Collectors.joining());
+    }
+
     //Дан список строк. Необходимо объединить все символы из всех строк, удалить дубликаты и отсортировать их в лексикографическом порядке.
     //Дан список объектов Person с полем "возраст". Необходимо отфильтровать объекты, возраст которых находится в диапазоне от 25 до 40 лет, отсортировать по имени и вывести результат.
     //Дан список чисел. Необходимо найти сумму всех четных чисел, которые являются положительными.
