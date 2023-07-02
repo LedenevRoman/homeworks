@@ -1,4 +1,4 @@
-package CT16;
+package _2023_06_15.CT16;
 
 public class Task {
     public static void printSortedSquares2(int[] arr) {

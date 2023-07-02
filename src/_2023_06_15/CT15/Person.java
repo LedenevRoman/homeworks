@@ -1,4 +1,4 @@
-package CT15;
+package _2023_06_15.CT15;
 
 public class Person {
     private String name;
