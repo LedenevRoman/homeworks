@@ -50,8 +50,8 @@ public class Generator {
         Status[] statuses = Status.values();
         bankingCard.setStatus(statuses[random.nextInt(statuses.length)]);
 
-        BigDecimal randomBigdecimal = BigDecimal.valueOf(random.nextDouble() * 1000000);
-        bankingCard.setAccountBalance(randomBigdecimal.setScale(2, RoundingMode.HALF_UP));
+        BigDecimal randomBigDecimal = BigDecimal.valueOf(random.nextDouble() * 1000000);
+        bankingCard.setAccountBalance(randomBigDecimal.setScale(2, RoundingMode.HALF_UP));
 
         PaymentSystem[] paymentSystems = PaymentSystem.values();
         bankingCard.setPaymentSystem(paymentSystems[random.nextInt(paymentSystems.length)]);

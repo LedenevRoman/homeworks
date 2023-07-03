@@ -1,5 +1,3 @@
-drop database homework;
-
 create database homework;
 
 use homework;

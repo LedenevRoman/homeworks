@@ -9,10 +9,17 @@ public class Homework {
         System.out.println(getUniqueSortedChars(List.of("Aloha", "A", "AB", "ABAB", "ahola", "asdfg")));
         System.out.println(getSecondMax(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9)));
         System.out.println(getFilteredGroupedWords(List.of("as123fadd","Aloha", "A", "AB", "ABAB", "ahola", "asdfg")));
-        System.out.println(getLongestWordWithEvenLength(List.of("as123fadd","Aloha", "A", "AB", "ABAB", "ahola", "asdfg", "121212121212")));
+        System.out.println(getLongestWordWithEvenLength(List.of("as123fadd","Aloha", "A", "AB", "ABAB",
+                "ahola", "asdfg", "121212121212")));
         System.out.println(isPalindromes(List.of("Aloha", "Ahola", "Laoha", "Ahalo", "ahoal", "olaha")));
         System.out.println(getMaxEvenNumber(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9)));
         System.out.println(transformToStringWithBrackets(List.of("Aloha", "Ahola", "Laoha", "Ahalo", "ahoal", "olaha")));
+        System.out.println(getUniqueCharacters(List.of("Aloha", "Ahola", "Laoha", "Ahalo", "ahoal", "olaha")));
+        System.out.println(getPersonsFrom25To40Sorted(List.of(new Person("Anton", 25),
+                new Person("Boris", 33), new Person("Aleksey", 35))));
+        System.out.println(getSecondMinimalOfUniqueNumbers(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 1)));
+        System.out.println(getCountOfWordsGroupedByLength(List.of("as123fadd","Aloha", "A", "AB", "ABAB", "ahola",
+                "asdfg", "121212121212")));
     }
 
     //Дан список строк. Необходимо отфильтровать строки, длина которых больше 3 символов, преобразовать их в верхний регистр, удалить повторяющиеся и вывести результат в отсортированном порядке.
@@ -37,15 +44,14 @@ public class Homework {
 
     //Дан список слов. Необходимо сгруппировать их по длине и вывести результат.
     public static Map<Integer, List<String>> getWordsGroupedByLength(List<String> words) {
-        Map<Integer, List<String>> result = new HashMap<>();
-        words.forEach(s -> result.merge(s.length(), List.of(s), (List<String> oldValue, List<String> newValue) -> {
-            List<String> list = new ArrayList<>(oldValue);
-            list.addAll(newValue);
-            return list;
-            //oldValue.addAll(newValue);
-            //return oldValue;
-        }));
-        return result;
+        return words.stream()
+                .collect(Collectors.toMap(String::length, List::of, (oldValue, newValue) -> {
+                    List<String> list = new ArrayList<>(oldValue);
+                    list.addAll(newValue);
+                    return list;
+/*                    oldValue.addAll(newValue);
+                    return oldValue;  UnsupportedOperationException*/
+                }));
     }
 
     //Дан список чисел. Необходимо найти наименьшее число, больше 0.
@@ -82,8 +88,8 @@ public class Homework {
                 .flatMapToInt(String::chars)
                 .mapToObj(ch -> (char) ch)
                 .distinct()
-                .sorted()
-                .collect(Collectors.toList()); //[A, B, a, d, f, g, h, l, o, s] Почему то сортирует B < а
+                .sorted(Comparator.comparingInt(Character::toLowerCase))
+                .collect(Collectors.toList());
     }
 
     //Дан список чисел. Необходимо найти второе максимальное число.
@@ -101,21 +107,12 @@ public class Homework {
         String consonants = "bcdfghjklmnpqrstvwxyz";
         return words.stream()
                 .filter(s -> s.matches("[A-Za-z]+"))
-                .map(word -> {
-                    Map<String, String> wordLetters = new HashMap<>();
-                    word.chars()
-                            .mapToObj(c -> (char) c)
-                            .forEach(character -> {
-                                String charToString = String.valueOf(Character.toLowerCase(character));
-                                if (consonants.contains(charToString)) {
-                                    wordLetters.merge("consonants", charToString, (oldValue, newValue) -> oldValue + ", " + newValue);
-                                } else {
-                                    wordLetters.merge("vowels", charToString, (oldValue, newValue) -> oldValue + ", " + newValue);
-                                }
-                            });
-                    return wordLetters;
-                }).collect(Collectors.toList());
-
+                .map(word -> word.chars()
+                        .mapToObj(c -> (char) c)
+                        .map(character -> String.valueOf(Character.toLowerCase(character)))
+                        .collect(Collectors.toMap(string -> consonants.contains(string) ? "consonants" : "vowels",
+                                s -> s, (oldValue, newValue) -> oldValue + ", " + newValue)))
+                .collect(Collectors.toList());
     }
 
     //Дан список строк. Необходимо удалить пустые строки, объединить оставшиеся строки в одну строку, разделенную запятой.
@@ -234,11 +231,75 @@ public class Homework {
     }
 
     //Дан список строк. Необходимо объединить все символы из всех строк, удалить дубликаты и отсортировать их в лексикографическом порядке.
+    public static String getUniqueCharacters(List<String> strings) {
+        return strings.stream()
+                .flatMapToInt(String::chars)
+                .distinct()
+                .mapToObj(c -> (char) c)
+                .sorted(Comparator.comparingInt(Character::toLowerCase))
+                .map(String::valueOf)
+                .collect(Collectors.joining());
+    }
+
     //Дан список объектов Person с полем "возраст". Необходимо отфильтровать объекты, возраст которых находится в диапазоне от 25 до 40 лет, отсортировать по имени и вывести результат.
+    public static List<Person> getPersonsFrom25To40Sorted(List<Person> personList) {
+        return personList.stream()
+                .filter(person -> person.getAge() >= 25 && person.getAge() < 40)
+                .sorted(Comparator.comparing(Person::getName))
+                .collect(Collectors.toList());
+    }
+
     //Дан список чисел. Необходимо найти сумму всех четных чисел, которые являются положительными.
+    public static int getSumOfEvenPositiveNumbers(List<Integer> integers) {
+        return integers.stream()
+                .filter(integer -> integer % 2 == 0 && integer > 0)
+                .mapToInt(i -> i)
+                .sum();
+    }
+
     //Дан список чисел. Необходимо найти второе минимальное число среди уникальных чисел.
+    public static Integer getSecondMinimalOfUniqueNumbers(List<Integer> integers) {
+        return integers.stream()
+                .collect(Collectors.toMap(integer -> integer, value -> 1, Integer::sum))
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() == 1)
+                .map(Map.Entry::getKey)
+                .sorted()
+                .skip(1)
+                .limit(1)
+                .findAny()
+                .orElse(null);
+    }
+
     //Дан список слов. Необходимо разделить их на две группы: одна группа - слова с длиной менее или равной 4 символам, другая группа - слова с длиной более 4 символов. После этого подсчитать количество слов в каждой группе и вывести результат.
+    public static Map<String, Integer> getCountOfWordsGroupedByLength(List<String> words) {
+        return words.stream()
+                .collect(Collectors.partitioningBy(word -> word.length() <= 4))
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(entry -> entry.getKey() ? "length <= 4" : "length > 4", entry -> entry.getValue().size()));
+    }
+
     //Дан список строк. Необходимо пропустить первые три символа в каждой строке и объединить оставшиеся символы в одну строку.
+    public static String getJoinedStringWithoutFirst3Letters(List<String> strings) {
+        return strings.stream()
+                .filter(s -> s.length() > 3)
+                .map(s -> s.substring(3))
+                .collect(Collectors.joining());
+    }
+
     //Дан список чисел. Необходимо найти три наименьших числа и вывести результат.
+    public static List<Integer> get3MinNumbers(List<Integer> integers) {
+        return integers.stream()
+                .sorted()
+                .limit(3)
+                .collect(Collectors.toList());
+    }
+
     //Дан список строк. Необходимо проверить, содержит ли хотя бы одна строка подстроку "an" и вывести результат.
+    public static boolean isContainsString(List<String> strings) {
+        return strings.stream()
+                .anyMatch(s -> s.contains("an"));
+    }
 }
