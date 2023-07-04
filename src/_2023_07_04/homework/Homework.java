@@ -37,7 +37,7 @@ public class Homework {
         return strings.stream()
                 .filter(s -> s.startsWith("A"))
                 .map(String::length)
-                .mapToInt(i -> i)
+                .mapToDouble(i -> i)
                 .average()
                 .orElse(0.0);
     }
@@ -268,12 +268,9 @@ public class Homework {
     }
 
     //Дан список слов. Необходимо разделить их на две группы: одна группа - слова с длиной менее или равной 4 символам, другая группа - слова с длиной более 4 символов. После этого подсчитать количество слов в каждой группе и вывести результат.
-    public static Map<String, Integer> getCountOfWordsGroupedByLength(List<String> words) {
+    public static Map<String, Long> getCountOfWordsGroupedByLength(List<String> words) {
         return words.stream()
-                .collect(Collectors.partitioningBy(word -> word.length() <= 4))
-                .entrySet()
-                .stream()
-                .collect(Collectors.toMap(entry -> entry.getKey() ? "length <= 4" : "length > 4", entry -> entry.getValue().size()));
+                .collect(Collectors.groupingBy(word -> word.length() <= 4 ? "length <= 4" : "length > 4", Collectors.counting()));
     }
 
     //Дан список строк. Необходимо пропустить первые три символа в каждой строке и объединить оставшиеся символы в одну строку.
