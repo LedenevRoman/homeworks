@@ -58,4 +58,5 @@ public class Generator {
 
         return bankingCard;
     }
+
 }
