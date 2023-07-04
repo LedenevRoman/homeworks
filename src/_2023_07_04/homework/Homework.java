@@ -97,8 +97,7 @@ public class Homework {
         return integers.stream()
                 .sorted(Comparator.reverseOrder())
                 .skip(1)
-                .limit(1)
-                .findAny()
+                .findFirst()
                 .orElse(null);
     }
 
@@ -186,9 +185,7 @@ public class Homework {
     public static String getLongestWordWithEvenLength(List<String> strings) {
         return strings.stream()
                 .filter(s -> s.length() % 2 == 0)
-                .sorted(Comparator.comparingInt(String::length).reversed())
-                .limit(1)
-                .findAny()
+                .max(Comparator.comparingInt(String::length))
                 .orElse(null);
     }
 
@@ -266,8 +263,7 @@ public class Homework {
                 .map(Map.Entry::getKey)
                 .sorted()
                 .skip(1)
-                .limit(1)
-                .findAny()
+                .findFirst()
                 .orElse(null);
     }
 
