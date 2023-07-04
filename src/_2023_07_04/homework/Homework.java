@@ -103,15 +103,14 @@ public class Homework {
     }
 
     //Дан список слов. Необходимо отфильтровать слова, состоящие только из букв, разделить их на гласные и согласные, и вывести результат.
-    public static List<Map<String, String>> getFilteredGroupedWords(List<String> words) {
+    public static List<Map<String, List<String>>> getFilteredGroupedWords(List<String> words) {
         String consonants = "bcdfghjklmnpqrstvwxyz";
         return words.stream()
                 .filter(s -> s.matches("[A-Za-z]+"))
                 .map(word -> word.chars()
                         .mapToObj(c -> (char) c)
                         .map(character -> String.valueOf(Character.toLowerCase(character)))
-                        .collect(Collectors.toMap(string -> consonants.contains(string) ? "consonants" : "vowels",
-                                s -> s, (oldValue, newValue) -> oldValue + ", " + newValue)))
+                        .collect(Collectors.groupingBy(string -> consonants.contains(string) ? "consonants" : "vowels")))
                 .collect(Collectors.toList());
     }
 
