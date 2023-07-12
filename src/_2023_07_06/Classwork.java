@@ -1,43 +1,38 @@
 package _2023_07_06;
 
-import java.time.LocalDate;
-import java.util.*;
+import _2023_07_13.homework.Homework;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Classwork {
     public static void main(String[] args) {
 
-        Random random = new Random();
-
-        LocalDate currentDate = LocalDate.now();
-        int randomDayOffset = random.nextInt(1825);
-        LocalDate cardExpireDate = currentDate.plusDays(randomDayOffset);
-        System.out.println(cardExpireDate);
-
         //Задача 1: Подсчет количества уникальных четных и нечетных чисел
-        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+        List<Integer> numbers = Homework.readIntegersFromFile();
         System.out.println(numbers.stream()
                 .distinct()
-                .collect(Collectors.groupingBy(n -> n % 2, Collectors.counting())));
+                .collect(Collectors.groupingBy(n -> n % 2 == 0 ? "Even" : "Odd", Collectors.counting())));
 
         //Задача 2: Группировка строк по первым буквам и вывод первых двух из каждой группы
-        List<String> words = Arrays.asList("apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "apfel", "ananas");
+        List<String> words = Homework.readWordsFromFile();
         Map<Character, List<String>> collect = words.stream()
                 .collect(Collectors.groupingBy(n -> n.toLowerCase().charAt(0)));
-        collect.forEach((key, value) -> {
-            System.out.println("Key: " + key + ", value: " + value.stream().limit(2).collect(Collectors.toList()));
-        });
+        collect.forEach((key, value) -> System.out.println("Key: " + key + ", value: " + value.stream().limit(2).collect(Collectors.toList())));
 
         //Задача 5: Разделение чисел на простые и составные
-        List<Integer> numbers3 = Arrays.asList(2, 3, 4, 5, 67, 8, 9, 10, 11, 12, 13, 14, 15);
+        List<Integer> numbers3 = Homework.readIntegersFromFile();
         Map<Boolean, List<Integer>> result = numbers3.stream()
                 .collect(Collectors.partitioningBy(Classwork::isPrime));
         System.out.println(result);
 
 
         //Задача 6: Получение уникальных символов из списка строк
-        List<String> words2 = Arrays.asList("apple", "banana", "cherry", "date");
+        List<String> words2 = Homework.readWordsFromFile();
         List<Character> result2 = words2.stream()
                 .flatMapToInt(String::chars)
                 .mapToObj(ch -> (char) ch)
@@ -47,29 +42,30 @@ public class Classwork {
 
 
         //Задача 7: Разделение строк на отдельные слова и удаление повторений
-        List<String> sentences = Arrays.asList("Hello world", "Java is awesome", "Stream API is powerful");
+        List<String> sentences = Homework.readLinesFromFile();
         List<String> result3 = sentences.stream()
-                .flatMap(string -> Arrays.stream(string.toLowerCase().split(" ")))
+                .flatMap(string -> Arrays.stream(string.toLowerCase().split("[,.\\s!?;\"]")))
                 .distinct()
+                .filter(s -> !s.isEmpty())
                 .collect(Collectors.toList());
         System.out.println(result3);
 
 
         //Задача 8: Фильтрация и преобразование строк toUpperCase
-        List<String> words3 = Arrays.asList("apple", "banana", "cherry", "date");
+        List<String> words3 = Homework.readWordsFromFile();
         System.out.println(words3.stream()
                 .filter(str -> str.length() >= 5)
                 .map(String::toUpperCase)
                 .collect(Collectors.toList()));
 
         //Задача 9: Получение среднего значения чисел
-        List<Integer> numbers4 = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> numbers4 = Homework.readIntegersFromFile();
         System.out.println(numbers4.stream()
                 .mapToInt(Integer::valueOf)
                 .average()
                 .orElse(0.0));
         //Задача 10: Получение списка квадратов чисел
-        List<Integer> numbers5 = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> numbers5 = Homework.readIntegersFromFile();
         System.out.println(numbers5.stream()
                 .map(n -> n * n)
                 .collect(Collectors.toList()));
@@ -91,7 +87,7 @@ public class Classwork {
         List<String> words6 = Arrays.asList("apple", "banana", "cherry", "date");
 
         //Задача 14: Сокращение списка до указанного размера
-        List<Integer> numbers6 = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        List<Integer> numbers6 = Homework.readIntegersFromFile();
         List<Integer> result14 = numbers6.stream()
                 .takeWhile(n -> n < 6)
                 .collect(Collectors.toList());
@@ -103,28 +99,6 @@ public class Classwork {
 
         System.out.println(Stream.of(list1, list2).flatMap(Collection::stream).collect(Collectors.toList()));
 
-        List<String> names = new ArrayList<>();
-        names.add("Vlad");
-        names.add("Mik");
-        names.add("Mick");
-        names.add("V");
-
-        names.stream()
-                .filter(name -> name.startsWith("V"))
-                .onClose(() -> System.out.println("Stream closed"))
-                .forEach(System.out::println);
-
-        System.out.println("/////////////////////////////////////////");
-
-        names.stream()
-                .filter(name -> name.startsWith("M"))
-                .onClose(() -> closeStream(names))
-                .close();
-    }
-
-    private static void closeStream(List<String> names) {
-        System.out.println("Stream closed");
-        names.clear();
     }
 
     private static boolean isPrime(int n) {
