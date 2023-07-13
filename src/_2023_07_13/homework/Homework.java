@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class Homework {
+public final class Homework {
     private static final String FILE_NAME_NUMBERS = "integers.txt";
     private static final String FILE_NAME_STRINGS = "wpe.txt";
+
+    private Homework() {
+    }
 
     public static void writeArrayToFile() {
         int[] array = generateIntArray();
