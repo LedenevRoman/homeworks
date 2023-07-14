@@ -9,9 +9,7 @@ public class TaskManager {
     }
 
     public void addTask(int priority, Task task) {
-        List<Task> list = new ArrayList<>();
-        list.add(task);
-        map.merge(priority, list, (oldValue, newValue) -> {
+        map.merge(priority, new ArrayList<>(Collections.singletonList(task)), (oldValue, newValue) -> {
             oldValue.addAll(newValue);
             return oldValue;
         });

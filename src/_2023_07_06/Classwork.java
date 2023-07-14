@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 public class Classwork {
     public static void main(String[] args) {
+        Homework.writeArrayToFile();
 
         //Задача 1: Подсчет количества уникальных четных и нечетных чисел
         List<Integer> numbers = Homework.readIntegersFromFile();
@@ -98,6 +99,8 @@ public class Classwork {
         List<Integer> list2 = Arrays.asList(4, 5, 6);
 
         System.out.println(Stream.of(list1, list2).flatMap(Collection::stream).collect(Collectors.toList()));
+        list1.stream().forEach(System.out::println);
+        list1.stream().forEach(System.out::println);
 
     }
 

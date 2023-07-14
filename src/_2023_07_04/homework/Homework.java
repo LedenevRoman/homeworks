@@ -45,12 +45,9 @@ public class Homework {
     //Дан список слов. Необходимо сгруппировать их по длине и вывести результат.
     public static Map<Integer, List<String>> getWordsGroupedByLength(List<String> words) {
         return words.stream()
-                .collect(Collectors.toMap(String::length, List::of, (oldValue, newValue) -> {
-                    List<String> list = new ArrayList<>(oldValue);
-                    list.addAll(newValue);
-                    return list;
-/*                    oldValue.addAll(newValue);
-                    return oldValue;  UnsupportedOperationException*/
+                .collect(Collectors.toMap(String::length, w -> new ArrayList<>(Collections.singletonList(w)), (oldValue, newValue) -> {
+                    oldValue.addAll(newValue);
+                    return oldValue;
                 }));
     }
 
