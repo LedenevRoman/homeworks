@@ -6,11 +6,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         Generator generator = new Generator();
-        List<Developer> developers = new ArrayList<>();
-
-        for (int i = 0; i < 20; i++) {
-            developers.add(generator.generateDeveloper());
-        }
+        List<Developer> developers = generator.generateDevelopers(20);
 
         System.out.println(HandlerUtils.getMalesWithSportCar(developers));
         System.out.println(HandlerUtils.getMapDeveloperMaxSpeed(developers));

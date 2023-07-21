@@ -4,19 +4,26 @@ import com.github.javafaker.Faker;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Generator {
     private static final Faker FAKER = new Faker();
 
-    public Developer generateDeveloper() {
-        String name = FAKER.name().firstName();
-        String lastName = FAKER.name().lastName();
-        int age = FAKER.random().nextInt(18, 70);
-        BigDecimal salary = BigDecimal.valueOf(FAKER.random().nextDouble() * 3000 + 2000)
-                .setScale(2, RoundingMode.HALF_UP);
-        char gender = FAKER.random().nextBoolean() ? 'm' : 'f';
-        Car car = generateCar();
-        return new Developer(name, lastName, age, salary, gender, car);
+    public List<Developer> generateDevelopers(int count) {
+        List<Developer> developers = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            String name = FAKER.name().firstName();
+            String lastName = FAKER.name().lastName();
+            int age = FAKER.random().nextInt(18, 70);
+            BigDecimal salary = BigDecimal.valueOf(FAKER.random().nextDouble() * 3000 + 2000)
+                    .setScale(2, RoundingMode.HALF_UP);
+            char gender = FAKER.random().nextBoolean() ? 'm' : 'f';
+            Car car = generateCar();
+            developers.add(new Developer(name, lastName, age, salary, gender, car));
+        }
+
+        return developers;
     }
 
     private Car generateCar() {

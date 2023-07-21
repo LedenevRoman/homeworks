@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Storage {
-    private Map<Client, BigDecimal> storage;
+    private final Map<Client, BigDecimal> storage;
 
     public Storage(Map<Client, BigDecimal> storage) {
         this.storage = storage;
@@ -49,7 +49,7 @@ public class Storage {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
                     String dateString = client.getBankingCard().getCardData().substring(16, 24);
                     LocalDate expireDate = LocalDate.parse(dateString, formatter);
-                    return expireDate.compareTo(LocalDate.now()) < 0;
+                    return expireDate.isBefore(LocalDate.now());
                 })
                 .collect(Collectors.toSet());
     }
