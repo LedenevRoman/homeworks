@@ -1,6 +1,5 @@
 package com.telrun.rledenev._2023_07_18;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
