@@ -137,3 +137,89 @@ $and: соединяет два условия, и документ должен
 $not: документ должен НЕ соответствовать условию
 
 $nor: соединяет два условия, и документ должен НЕ соответстовать обоим условиям
+
+2. Заполнить коллекцию workers 5 документами со свойствами id, firstname, lastname, age, position, salary, skills. Используйте следующие данные:
+    1. Inga Petrova, 27, Barista, 1500, [’preparing drinks’, ‘cleaning equipment’]
+    2. Boris Orlov, 36, Server, 2400, [’taking orders’, ‘suggesting meals’, ‘taking payments’]
+    3. Ivan Demidov, 32, Chef, 3200, [’preparing food’, ‘baking bread’]
+    4. Marina Sidorova, 22, Hostess, 1700, [’greeting guests’, ‘seating guests’, ‘answering phone calls’]
+    5. Olga Ivanova, 43, Sommelier, 2500, [’curating a wine list’, ‘creating wine pairings’]
+
+db.workers.insertMany([
+    {id: 1, firstname: "Inga", lastname: "Petrova", age: 27, position: "Barista", salary: 1500, skills: ["preparing drinks", "cleaning equipment"]},
+    {id: 2, firstname: "Boris", lastname: "Orlov", age: 36, position: "Server", salary: 2400, skills: ["taking orders", "suggesting meals", "taking payments"]},
+    {id: 3, firstname: "Ivan", lastname: "Demidov", age: 32, position: "Chef", salary: 3200, skills: ["preparing food", "baking bread"]},
+    {id: 4, firstname: "Marina", lastname: "Sidorova", age: 22, position: "Hostess", salary: 1700, skills: ["greeting guests", "seating guests", "answering phone calls"]},
+    {id: 5, firstname: "Olga", lastname: "Ivanova", age: 43, position: "Sommelier", salary: 2500, skills: ["curating a wine list", "creating wine pairings"]}
+])
+
+db.workers.find({id: {$eq: 3}}, {firstname: 1, lastname: 1})
+db.workers.find({salary: {$gt: 2000}}, {firstname: 1, salary: 1})
+db.workers.find({salary: {$gt: 2000}, age: {$lt: 40}}, {firstname: 1, salary: 1, age: 1})
+db.workers.find({$and: [
+{salary: {$lte: 2500}},
+ {salary: {$gte: 1800}}
+ ]})
+
+db.workers.find({salary: {$lte: 2500, $gte: 1800}}, {firstname: 1, salary: 1, age: 1})
+
+db.workers.find({age: {$ne: 27}}, {firstname: 1, salary: 1, age: 1})
+db.workers.find({$or: [
+{position: "Barista"},
+{position: "Chef"}]}, {firstname: 1, salary: 1, position: 1})
+
+db.workers.find({position: {$in: ["Barista", "Chef"]}})
+
+db.workers.find({skills: {$all: ["taking orders", "taking payments"]}})
+
+db.workers.find({skills: {$in: ["preparing drinks", "baking bread"]}})
+
+db.workers.find({skills: {$nin: ["preparing drinks", "baking bread"]}})
+
+db.workers.updateOne(
+{id: 1},
+{$set: {lastname: "Smit"}}
+)
+
+db.workers.updateOne(
+{id: 1},
+{$set: {position: "Head Server"}}
+)
+
+db.workers.updateOne(
+{firstname: "Marina", lastname: "Sidorova"},
+{$set: {age: 23}}
+)
+
+db.workers.updateMany(
+{salary: {$gt: 2000}},
+{$set: {age: 35}}
+)
+
+db.workers.updateOne(
+{id: 2},
+{$mul: {age: 1.5}})
+
+db.workers.updateMany({}, {$mul: {salary: 1.1}})
+
+db.workers.updateOne(
+{id: 1},
+{$push: {skills: "drink vodka"}})
+
+db.workers.updateOne(
+{id: 3},
+{$push: {skills: "serving desserts"}})
+
+db.workers.updateMany(
+{},
+{$pull: {skills: "taking payments"}})
+
+db.workers.updateMany(
+{id: 1},
+{$inc: {salary: 300}})
+
+db.workers.updateMany(
+{},
+{$inc: {age: -4}})
+
+db.workers.updateMany({}, {$rename: {"position": "job"}})

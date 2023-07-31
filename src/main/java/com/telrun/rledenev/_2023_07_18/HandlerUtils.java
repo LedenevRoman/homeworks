@@ -32,17 +32,15 @@ public final class HandlerUtils {
     public static void generateTextFileDevelopersByRows(String filename, List<Developer> developers) {
         try (FileWriter writer = new FileWriter(filename)){
             StringBuilder stringBuilder = new StringBuilder();
-            developers.forEach(developer -> {
-                stringBuilder.append(developer.getName())
-                        .append("-[auto: ")
-                        .append(developer.getCar().getBrand().name())
-                        .append(" ::: salary: ")
-                        .append(developer.getSalary())
-                        .append("] \n");
-            });
+            developers.forEach(developer -> stringBuilder.append(developer.getName())
+                    .append("-[auto: ")
+                    .append(developer.getCar().getBrand().name())
+                    .append(" ::: salary: ")
+                    .append(developer.getSalary())
+                    .append("] \n"));
             writer.write(stringBuilder.toString());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new WriteFileException(e.getMessage());
         }
     }
 }
