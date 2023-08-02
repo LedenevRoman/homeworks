@@ -223,3 +223,32 @@ db.workers.updateMany(
 {$inc: {age: -4}})
 
 db.workers.updateMany({}, {$rename: {"position": "job"}})
+
+                                                                                          use socialnetwork;
+
+db.users.insertMany([
+{ _id: 1, fullname: 'hacker111', country: 'Germany' },
+{ _id: 2, fullname: 'user 2', country: 'USA' },
+{ _id: 3, fullname: 'user 3', country: 'China' }])
+
+db.users.find({country: {$eq: 'China'}})
+
+db.users.find({country: {$ne: 'China'}})
+
+db.users.updateMany(
+{country: {$eq: 'China'}},
+{$set: {is_blocked: true}}
+)
+
+db.users.find(
+{is_blocked: {$ne: true}},
+{fullname: 1, _id: 0})
+
+db.users.updateMany(
+{is_blocked: true},
+{$unset: {is_blocked: null}})
+
+db.users.updateOne(
+{_id: 1},
+{$addToSet: {tag: 'admin'}}
+)
