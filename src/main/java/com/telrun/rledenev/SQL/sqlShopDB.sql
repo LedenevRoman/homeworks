@@ -359,7 +359,7 @@ VALUES
 );
 
 
--- Добавление 30 продуктов в таблицу products
+-- Добавление 30 продуктов в таблицу products.txt
 INSERT INTO products (name, price, description, supplier_id, amount, in_stoke)
 VALUES
   ('T-shirt', 19.99, 'A comfortable and stylish t-shirt for everyday wear.', 3, 100, 'Y'),

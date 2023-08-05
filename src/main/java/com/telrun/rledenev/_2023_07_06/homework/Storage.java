@@ -46,9 +46,9 @@ public class Storage {
         return storage.keySet()
                 .stream()
                 .filter(client -> {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
-                    String dateString = client.getBankingCard().getCardData().substring(16, 24);
-                    LocalDate expireDate = LocalDate.parse(dateString, formatter);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
+                    String dateString = client.getBankingCard().getCardData().substring(16, 20);
+                    LocalDate expireDate = LocalDate.parse("01" + dateString, formatter);
                     return expireDate.isBefore(LocalDate.now());
                 })
                 .collect(Collectors.toSet());
@@ -66,9 +66,9 @@ public class Storage {
         return storage.keySet()
                 .stream()
                 .collect(Collectors.groupingBy(client -> {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
-                    String dateString = client.getBankingCard().getCardData().substring(16, 24);
-                    LocalDate expireDate = LocalDate.parse(dateString, formatter);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
+                    String dateString = client.getBankingCard().getCardData().substring(16, 20);
+                    LocalDate expireDate = LocalDate.parse("01" + dateString, formatter);
                     return expireDate.isBefore(LocalDate.now()) ? "Expired" : "Not Expired";
                 }));
     }

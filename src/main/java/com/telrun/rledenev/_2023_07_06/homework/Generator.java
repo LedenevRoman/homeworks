@@ -24,7 +24,7 @@ public class Generator {
         LocalDate currentDate = LocalDate.now();
         int randomDayOffset = RANDOM.nextInt(1825);
         LocalDate cardExpireDate = currentDate.plusDays(randomDayOffset).minusYears(2);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMyy");
         result.append(cardExpireDate.format(formatter));
 
         for (int i = 0; i < CVV_CODE_LENGTH; i++) {

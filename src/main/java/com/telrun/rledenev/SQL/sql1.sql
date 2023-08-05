@@ -942,7 +942,7 @@ INSERT INTO `order_details` (`OrderDetailID`, `OrderID`, `ProductID`, `Quantity`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Table structure for table `products.txt`
 --
 
 CREATE TABLE `products` (
@@ -955,7 +955,7 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `products`
+-- Dumping data for table `products.txt`
 --
 
 INSERT INTO `products` (`ProductID`, `ProductName`, `SupplierID`, `CategoryID`, `Unit`, `Price`) VALUES
