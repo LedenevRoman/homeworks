@@ -7,37 +7,44 @@ public class MyNumberList {
      *     // Методы add/size/remove(index)/sum()
      */
 
-    private final Number[] numbers;
+    private final Integer[] numbers;
     private final Integer capacity;
     private int size = 0;
-    private long sum = 0;
+    private int sum = 0;
 
     public MyNumberList(Integer capacity) {
         this.capacity = capacity;
-        numbers = new Number[capacity];
+        numbers = new Integer[capacity];
     }
 
-    public void add(Number number){
+    public void add(Integer number){
         if (size == capacity) {
             return;
         }
         numbers[size] = number;
         size++;
-        sum += (long) number;
+        sum += number;
     }
 
-    public Number remove(int index) {
+    public Integer remove(int index) {
         if (index < 0 || index > size - 1) {
             throw new IllegalArgumentException();
         }
-        Number result = numbers[index];
+        Integer result = numbers[index];
         numbers[index] = null;
-        System.arraycopy(numbers, index + 1, numbers, index, capacity - size--);
-        sum -= (long) result;
+        if (size == capacity) {
+            size--;
+            System.arraycopy(numbers, index + 1, numbers, index, size - index);
+            numbers[size] = null;
+        } else {
+            System.arraycopy(numbers, index + 1, numbers, index, size - index);
+            size--;
+        }
+        sum -= result;
         return result;
     }
 
-    public Number sum() {
+    public int sum() {
         return sum;
     }
 

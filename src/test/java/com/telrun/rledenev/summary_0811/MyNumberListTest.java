@@ -15,11 +15,11 @@ class MyNumberListTest {
     @BeforeEach
     void setUp() {
         myNumberList = new MyNumberList(CAPACITY);
-        myNumberList.add(1L);
-        myNumberList.add(2L);
-        myNumberList.add(3L);
-        myNumberList.add(4L);
-        myNumberList.add(5L);
+        myNumberList.add(1);
+        myNumberList.add(2);
+        myNumberList.add(3);
+        myNumberList.add(4);
+        myNumberList.add(5);
     }
 
     @AfterEach
@@ -29,32 +29,41 @@ class MyNumberListTest {
 
     @Test
     void addNumberInBoundTest() {
-        myNumberList.add(6L);
-        long size = myNumberList.size();
-        Assertions.assertEquals(6, size);
+        myNumberList.add(6);
+        Assertions.assertEquals(6, myNumberList.size());
+        Assertions.assertEquals(21, myNumberList.sum());
     }
 
     @Test
     void addNumberOutOfBoundTest() {
-        myNumberList.add(6L);
-        myNumberList.add(7L);
-        myNumberList.add(8L);
-        myNumberList.add(9L);
-        myNumberList.add(10L);
-        myNumberList.add(11L);
+        myNumberList.add(6);
+        myNumberList.add(7);
+        myNumberList.add(8);
+        myNumberList.add(9);
+        myNumberList.add(10);
+        myNumberList.add(11);
         Assertions.assertEquals(10, myNumberList.size());
+        Assertions.assertEquals(55, myNumberList.sum());
     }
 
     @Test
     void removePositiveCaseTest() {
-        myNumberList.remove(3);
+        int actual = myNumberList.remove(3);
+        Assertions.assertEquals(4, actual);
         Assertions.assertEquals(4, myNumberList.size());
+        Assertions.assertEquals(11, myNumberList.sum());
     }
 
     @Test
-    void removeSizeEqualsTest() {
-        myNumberList.remove(3);
-        Assertions.assertEquals(4, myNumberList.size());
+    void removeFromFullArrayTest() {
+        myNumberList.add(6);
+        myNumberList.add(7);
+        myNumberList.add(8);
+        myNumberList.add(9);
+        myNumberList.add(10);
+        myNumberList.remove(4);
+        Assertions.assertEquals(9, myNumberList.size());
+        Assertions.assertEquals(50, myNumberList.sum());
     }
 
     @Test
@@ -68,13 +77,8 @@ class MyNumberListTest {
     }
 
     @Test
-    void removeReturnNumberTest() {
-        Assertions.assertEquals(4L, myNumberList.remove(3));
-    }
-
-    @Test
     void sum() {
-        Assertions.assertEquals(15L, myNumberList.sum());
+        Assertions.assertEquals(15, myNumberList.sum());
     }
 
     @Test
