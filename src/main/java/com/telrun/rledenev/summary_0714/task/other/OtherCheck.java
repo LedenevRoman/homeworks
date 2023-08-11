@@ -1,4 +1,4 @@
-package com.telrun.rledenev.summary_1407.task.other;
+package com.telrun.rledenev.summary_0714.task.other;
 
 public class OtherCheck {
     private final String article;

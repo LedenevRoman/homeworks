@@ -1,6 +1,6 @@
-package com.telrun.rledenev.summary_1407.task;
+package com.telrun.rledenev.summary_0714.task;
 
-import com.telrun.rledenev.summary_1407.task.other.OtherCheckProvider;
+import com.telrun.rledenev.summary_0714.task.other.OtherCheckProvider;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;

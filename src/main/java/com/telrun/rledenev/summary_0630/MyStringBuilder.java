@@ -1,4 +1,4 @@
-package com.telrun.rledenev.summary_3006;
+package com.telrun.rledenev.summary_0630;
 
 import java.util.ArrayList;
 import java.util.List;

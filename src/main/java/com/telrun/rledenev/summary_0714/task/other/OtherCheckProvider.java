@@ -1,4 +1,4 @@
-package com.telrun.rledenev.summary_1407.task.other;
+package com.telrun.rledenev.summary_0714.task.other;
 
 import java.time.ZonedDateTime;
 import java.util.List;
