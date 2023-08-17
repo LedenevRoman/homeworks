@@ -258,3 +258,74 @@ db.users.updateOne(
 {_id: 1},
 {$addToSet: {tag: 'admin'}}
 )
+
+db.transactions.insertMany([{
+        sender_id: 1,
+        recipient_id: 2,
+        amount: 100,
+        currency: "eur",
+        is_completed: true
+    },
+    {
+        sender_id: 2,
+        recipient_id: 3,
+        amount: 50,
+        currency: "eur",
+        is_completed: false
+    },
+    {
+        sender_id: 2,
+        recipient_id: 1,
+        amount: 70,
+        currency: "usd",
+        is_completed: true
+    },
+    {   sender_id: 3,
+        recipient_id: 1,
+        amount: 100,
+        currency: "usd",
+        is_completed: true
+    },
+    {   sender_id: 1,
+        recipient_id: 3,
+        amount: 100,
+        currency: "usd",
+        is_completed: false
+    }
+    ]);
+
+db.transactions.find({});
+
+db.transactions.aggregate([]);
+
+db.transactions.aggregate([{
+    $match: {currency: {$eq: "usd"}}
+}]);
+
+db.transactions.aggregate([{
+    $match: {currency: {$eq: "eur"}}
+},
+{
+    $sort: { amount: -1 }
+},
+{
+    $limit: 1
+}
+]);
+
+db.transactions.aggregate([{
+    $match: {
+        currency: {$eq: "eur"},
+        amount: {$lt: 1000}
+    }
+},
+{
+    $sort: { amount: -1 }
+},
+{
+    $skip: 1
+},
+{
+    $limit: 1
+}
+]);
