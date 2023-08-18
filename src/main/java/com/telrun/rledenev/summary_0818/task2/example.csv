@@ -1,0 +1,4 @@
+CATEGORY,NAME,FACTORY,QUANTITY,ISPACKED,ISADV,PRICE,MARGIN,ISDEBT
+FOOD#1,Pasta#1,Barilla#1,150#1,true#1,false#1,1.49#1,15.0#1,false#1
+DRINKS#2,Mineral Water#2,Coca-Cola#2,300#2,true#2,false#2,0.99#2,20.0#2,false#2
+SNACKS#3,Potato Chips#3,Lays#3,250#3,true#3,true#3,1.49#3,18.5#3,false#3

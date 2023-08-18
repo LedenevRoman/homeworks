@@ -15,11 +15,12 @@ public class Product {
     private String category;
     private String name;
     private String factory;
-    private String quantity;
+    private Integer quantity;
     private Boolean isPacked;
     private Boolean isAdv;
     private BigDecimal price;
     private BigDecimal margin;
+    private Boolean isDebt;
 
     @Override
     public boolean equals(Object o) {
@@ -34,11 +35,12 @@ public class Product {
                 && Objects.equals(isPacked, product.isPacked)
                 && Objects.equals(isAdv, product.isAdv)
                 && Objects.equals(price, product.price)
-                && Objects.equals(margin, product.margin);
+                && Objects.equals(margin, product.margin)
+                && Objects.equals(isDebt, product.isDebt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, category, name, factory, quantity, isPacked, isAdv, price, margin);
+        return Objects.hash(id, category, name, factory, quantity, isPacked, isAdv, price, margin, isDebt);
     }
 }
