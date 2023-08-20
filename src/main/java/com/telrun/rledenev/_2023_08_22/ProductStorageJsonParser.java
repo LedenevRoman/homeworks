@@ -9,20 +9,18 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 public final class ProductStorageJsonParser {
-    private static final String JSON_FILE_NAME = "src/main/java/com/telrun/rledenev/_2023_08_22/report.json";
 
     private ProductStorageJsonParser() {
     }
 
-    public static ProductStorage addProductsToStorageFromJsonFile(ProductStorage productStorage) {
-        String json = readJsonFromFile();
+    public static void addProductsToStorageFromJsonFile(String jsonFilePath, ProductStorage productStorage) {
+        String json = readJsonFromFile(jsonFilePath);
         JSONArray jsonArray = new JSONArray(json);
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             Product product = parseJsonObjectToProduct(jsonObject);
             productStorage.addProduct(product);
         }
-        return productStorage;
     }
 
     private static Product parseJsonObjectToProduct(JSONObject jsonObject) {
@@ -42,8 +40,8 @@ public final class ProductStorageJsonParser {
         return product;
     }
 
-    private static String readJsonFromFile() {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(JSON_FILE_NAME))) {
+    private static String readJsonFromFile(String jsonFilePath) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(jsonFilePath))) {
             StringBuilder stringBuilder = new StringBuilder();
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -51,7 +49,7 @@ public final class ProductStorageJsonParser {
             }
             return stringBuilder.toString();
         } catch (IOException e) {
-            throw new IllegalArgumentException("File not found with name " + JSON_FILE_NAME);
+            throw new IllegalArgumentException("File not found with name " + jsonFilePath);
         }
     }
 }

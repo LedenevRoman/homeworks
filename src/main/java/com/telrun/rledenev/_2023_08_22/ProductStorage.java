@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 public class ProductStorage {
     private final Set<Product> productsDataBase = new HashSet<>();
 
-    public boolean addProduct(Product product) {
+    public void addProduct(Product product) {
         checkProduct(product);
-        return productsDataBase.add(product);
+        productsDataBase.add(product);
     }
 
     public Set<Long> getIdsOfProducts() {
@@ -76,26 +76,6 @@ public class ProductStorage {
         return productsDataBase.stream()
                 .collect(Collectors.toMap(Product::getId, product -> product,
                         (oldValue, newValue) -> newValue, TreeMap::new));
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProductStorage that = (ProductStorage) o;
-        return Objects.equals(productsDataBase, that.productsDataBase);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(productsDataBase);
-    }
-
-    @Override
-    public String toString() {
-        return "ProductStorage{" +
-                "productsDataBase=" + productsDataBase +
-                '}';
     }
 
     private static void checkProduct(Product product) {
