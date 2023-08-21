@@ -64,10 +64,10 @@ public class ProductStorage {
                         Collectors.averagingDouble(product -> product.getMargin().doubleValue())));
     }
 
-    public List<Product> getThreeCheapestFoodIsAdv() {
+    public List<Product> getThreeLowestMarginFoodIsAdv() {
         return productsDataBase.stream()
                 .filter(product -> product.getCategory().equals("FOOD") && product.getIsAdv())
-                .sorted(Comparator.comparing(Product::getPrice))
+                .sorted(Comparator.comparing(Product::getMargin))
                 .limit(3)
                 .collect(Collectors.toList());
     }

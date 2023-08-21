@@ -149,7 +149,7 @@ class ProductStorageTest {
         expected.add(product2);
         expected.add(product3);
 
-        assertEquals(expected, productStorage.getThreeCheapestFoodIsAdv());
+        assertEquals(expected, productStorage.getThreeLowestMarginFoodIsAdv());
     }
 
     @Test
