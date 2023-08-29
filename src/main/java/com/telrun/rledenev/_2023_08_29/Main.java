@@ -9,8 +9,7 @@ public class Main {
         Dish dish3 = new Dish("Steak", 3000, Status.NEW);
         Order order1 = new Order("1", List.of(dish1, dish2, dish3), Status.NEW);
 
-        Object lock = new Object();
-        OrderProcessor orderProcessor = new OrderProcessor(new Kitchen(2, lock), lock);
+        OrderProcessor orderProcessor = new OrderProcessor(new Kitchen(2));
         orderProcessor.processOrder(order1);
     }
 }

@@ -5,11 +5,9 @@ import java.util.concurrent.Executors;
 
 class Kitchen {
     private final ExecutorService chefThreadPool; // наши повара
-    private final Object lock;
 
-    public Kitchen(int chefCount, Object lock) {
+    public Kitchen(int chefCount) {
         chefThreadPool = Executors.newFixedThreadPool(chefCount); // Используем ThreadPool для ограничения количества одновременно работающих поваров.
-        this.lock = lock;
     }
 
     public void cookDish(Dish dish) {
@@ -23,8 +21,8 @@ class Kitchen {
             }
             dish.setStatusDish(Status.READY);
             System.out.println(dish.getName() + " is ready!");
-            synchronized (lock) {
-                lock.notifyAll();
+            synchronized (this) {
+                this.notifyAll();
             }
         });
     }

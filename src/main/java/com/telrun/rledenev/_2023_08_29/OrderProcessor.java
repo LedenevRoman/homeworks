@@ -4,11 +4,9 @@ import java.util.List;
 
 class OrderProcessor {
     private final Kitchen kitchen;
-    private final Object lock;
 
-    public OrderProcessor(Kitchen kitchen, Object lock) {
+    public OrderProcessor(Kitchen kitchen) {
         this.kitchen = kitchen;
-        this.lock = lock;
     }
 
     public void processOrder(Order order) throws InterruptedException {
@@ -17,10 +15,10 @@ class OrderProcessor {
         for (Dish dish : dishList) {
             kitchen.cookDish(dish);
         }
-        synchronized (lock) {
+        synchronized (kitchen) {
             while (dishList.stream()
                     .anyMatch(d -> !d.getStatusDish().equals(Status.READY))) {
-                lock.wait();
+                kitchen.wait();
             }
             order.setStatus(Status.READY);
             System.out.println("READY" + order.getId());
