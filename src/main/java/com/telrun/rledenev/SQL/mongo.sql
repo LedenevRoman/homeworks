@@ -330,3 +330,68 @@ db.transactions.aggregate([{
 }
 ]);
 
+
+                         AGGREGATION
+
+db.videos.aggregate([
+{ $match: {
+        duration_secs: {$gte: 3600}
+    }
+},
+{
+  $lookup: {
+      from: "users",
+      localField: "author_id",
+      foreignField: "_id",
+      as: "author"
+  }
+},
+{
+    $unwind: "$author"
+},
+{
+        $project: {
+            title: 1,
+            author_fullname: '$author.fullname',
+            duration_secs: 1,
+            _id: 0
+        }
+}])
+
+db.videos.aggregate([
+{ $group : {
+    _id: null,
+    avg_val:{$avg:"$duration_secs"}
+    }
+},
+{
+           $project: {
+            _id: 0
+        }
+}])
+
+db.videos.aggregate([
+{ $group : {
+    _id: "$author_id",
+    avg_duration:{$avg:"$duration_secs"}
+    }
+},
+{
+  $lookup: {
+      from: "users",
+      localField: "_id",
+      foreignField: "_id",
+      as: "author"
+  }
+},
+{
+    $unwind: "$author"
+},
+{
+               $project: {
+                   author_name: "$author.fullname",
+                   _id: 0,
+                   avg_duration: 1
+        }
+}
+])

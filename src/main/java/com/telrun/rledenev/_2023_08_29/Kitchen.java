@@ -14,6 +14,7 @@ class Kitchen {
         chefThreadPool.execute(() -> {
             System.out.println("cooking: " + dish.getName() + " with thread: " + Thread.currentThread().getName());
             try {
+                dish.setStatusDish(Status.COOKING);
                 Thread.sleep(dish.getPreparationTime());
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();

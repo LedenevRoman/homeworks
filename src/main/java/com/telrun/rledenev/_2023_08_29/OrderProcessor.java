@@ -20,9 +20,8 @@ class OrderProcessor {
                     .anyMatch(d -> !d.getStatusDish().equals(Status.READY))) {
                 kitchen.wait();
             }
-            order.setStatus(Status.READY);
-            System.out.println("READY" + order.getId());
         }
-        kitchen.shutdown();
+        order.setStatus(Status.READY);
+        System.out.println("ORDER-" + order.getId() + " IS READY");
     }
 }
