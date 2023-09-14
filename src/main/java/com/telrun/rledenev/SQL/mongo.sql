@@ -395,3 +395,38 @@ db.videos.aggregate([
         }
 }
 ])
+
+db.videos.aggregate([
+{$match: {_id: {$ne: null}}},
+{$limit : 1}
+])
+
+db.videos.aggregate([
+{
+    $group: {
+        _id: null,
+        avg_duration: {$avg: '$duration_secs'},
+        total_videos: {$count: {}}
+    }
+},
+{$project: {
+    _id: 0
+}}
+])
+
+db.videos.aggregate([
+{ $sort: { duration_secs: -1 } },
+{ $limit: 1 },
+{ $project: { title: 1, _id: 0, duration_secs: 1 } }
+])
+
+db.users.updateMany(
+{is_blocked: {$ne: true}},
+{$mul: {balance: 1.15}}
+)
+
+db.videos.aggregate([
+    {
+        $sample: { size: 1 }
+    }
+])

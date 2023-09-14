@@ -19,15 +19,10 @@ public class Main {
         Kitchen kitchen = new Kitchen(2);
 
         OrderProcessor orderProcessor = new OrderProcessor(kitchen);
-        Thread thread1 = getNewThread(orderProcessor, order1);
-        Thread thread2 = getNewThread(orderProcessor, order2);
-        Thread thread3 = getNewThread(orderProcessor, order3);
-        Thread thread4 = getNewThread(orderProcessor, order4);
-
-        thread1.start();
-        thread2.start();
-        thread3.start();
-        thread4.start();
+        Thread thread1 = startNewThread(orderProcessor, order1);
+        Thread thread2 = startNewThread(orderProcessor, order2);
+        Thread thread3 = startNewThread(orderProcessor, order3);
+        Thread thread4 = startNewThread(orderProcessor, order4);
 
         try {
             thread1.join();
@@ -41,13 +36,15 @@ public class Main {
         kitchen.shutdown();
     }
 
-    private static Thread getNewThread(OrderProcessor orderProcessor, Order order) {
-        return new Thread(() -> {
+    private static Thread startNewThread(OrderProcessor orderProcessor, Order order) {
+        Thread thread = new Thread(() -> {
             try {
                 orderProcessor.processOrder(order);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
         });
+        thread.start();
+        return thread;
     }
 }
